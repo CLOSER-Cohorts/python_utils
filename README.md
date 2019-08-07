@@ -1,2 +1,2 @@
 # python_utils
-A set of python utilitiees to do little jobs
+A set of python utilities to do little jobs
