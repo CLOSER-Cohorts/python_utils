@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# Generate cionfig file from top level DDI XML instance
+# Generate cionfig file from DDIinstance file
 # Usage: config_gen.py 
 
 import sys
