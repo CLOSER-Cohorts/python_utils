@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# Generate cionfig file from DDIinstance file
+# Generate cionfig file from top level DDI XML instance
 # Usage: config_gen.py 
 
 import sys
@@ -31,21 +31,30 @@ for file in files:
 			if s.tag == '{ddi:reusable:3_2}ID':
 				sid = s.text
 				surn="urn:ddi:"+sagency+":"+sid
+			if s.tag == '{ddi:datacollection:3_2}DataCollectionModuleName':
+				name=""
+				for y in s.iter():
+					if y.tag== '{ddi:reusable:3_2}String':
+						name  = y.text								
+						print "dataset"+"\t"+study+"\t"+name+"\t"+surn+"\t"+"dataset\\"+name+".ddi32.rp.xml"
 			
-		for elem in tree.findall('{ddi:group:3_2}Group/{ddi:studyunit:3_2}StudyUnit/{ddi:datacollection:3_2}DataCollection'):
-			urn=""
-			agency=""
-			id=""
-			for x in elem.iter():
-				if x.tag == '{ddi:reusable:3_2}Agency':
-					agency = x.text
-				if x.tag == '{ddi:reusable:3_2}ID':
-					id = x.text
-					urn="urn:ddi:"+agency+":"+id
-				if x.tag == '{ddi:datacollection:3_2}DataCollectionModuleName':
-					name=""
-					for y in x.iter():
-						if y.tag== '{ddi:reusable:3_2}String':
-							name  = y.text								
-							print "instrument"+"\t"+study+"\t"+name+"\t"+urn+"\t"+"instruments\\"+name+".xml"
-							print "dataset"+"\t"+study+"\t"+name+"\t"+surn+"\t"+"dataset\\"+name+".ddi32.rp.xml"
+	for elem in tree.findall('{ddi:group:3_2}Group/{ddi:studyunit:3_2}StudyUnit/{ddi:datacollection:3_2}DataCollection'):
+		urn=""
+		agency=""
+		id=""
+		for x in elem.iter():
+			if x.tag == '{ddi:reusable:3_2}Agency':
+				agency = x.text
+			if x.tag == '{ddi:reusable:3_2}ID':
+				id = x.text
+				urn="urn:ddi:"+agency+":"+id
+			if x.tag == '{ddi:datacollection:3_2}DataCollectionModuleName':
+				name=""
+				for y in x.iter():
+					if y.tag== '{ddi:reusable:3_2}String':
+						name  = y.text								
+						print "instrument"+"\t"+study+"\t"+name+"\t"+urn+"\t"+"instruments\\"+name+".xml"
+				
+		
+
+
